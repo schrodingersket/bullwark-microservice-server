@@ -9,6 +9,7 @@ DOCKER = $(shell which docker)
 REPOSITORY_NAME = bullwark-microservice-server
 BUILD_DIR = github.com/${REPOSITORY_NAME}
 BIN_NAME = bullwark-microservice-server
+GO_DOCKER_VERSION = latest
 
 VERSION?=?
 COMMIT=$(shell git rev-parse HEAD)
@@ -70,28 +71,28 @@ clean:
 
 # Each of the above commands has a corresponding Docker implementation, so that no dependencies need be installed.
 docker:
-	docker run --rm -v $(CURDIR):/usr/src/${REPOSITORY_NAME} -w /usr/src/${REPOSITORY_NAME} golang:1.8 make
+	docker run --rm -v $(CURDIR):/usr/src/${REPOSITORY_NAME} -w /usr/src/${REPOSITORY_NAME} golang:${GO_DOCKER_VERSION} make
 
 docker-clean:
-	docker run --rm -v $(CURDIR):/usr/src/${REPOSITORY_NAME} -w /usr/src/${REPOSITORY_NAME} golang:1.8 make clean
+	docker run --rm -v $(CURDIR):/usr/src/${REPOSITORY_NAME} -w /usr/src/${REPOSITORY_NAME} golang:${GO_DOCKER_VERSION} make clean
 
 docker-test:
-	docker run --rm -v $(CURDIR):/usr/src/${REPOSITORY_NAME} -w /usr/src/${REPOSITORY_NAME} golang:1.8 make test
+	docker run --rm -v $(CURDIR):/usr/src/${REPOSITORY_NAME} -w /usr/src/${REPOSITORY_NAME} golang:${GO_DOCKER_VERSION} make test
 
 docker-build:
-	docker run --rm -v $(CURDIR):/usr/src/${REPOSITORY_NAME} -w /usr/src/${REPOSITORY_NAME} golang:1.8 make build
+	docker run --rm -v $(CURDIR):/usr/src/${REPOSITORY_NAME} -w /usr/src/${REPOSITORY_NAME} golang:${GO_DOCKER_VERSION} make build
 
 docker-build.tar.gz:
-	docker run --rm -v $(CURDIR):/usr/src/${REPOSITORY_NAME} -w /usr/src/${REPOSITORY_NAME} golang:1.8 make build.tar.gz
+	docker run --rm -v $(CURDIR):/usr/src/${REPOSITORY_NAME} -w /usr/src/${REPOSITORY_NAME} golang:${GO_DOCKER_VERSION} make build.tar.gz
 
 docker-build.zip:
-	docker run --rm -v $(CURDIR):/usr/src/${REPOSITORY_NAME} -w /usr/src/${REPOSITORY_NAME} golang:1.8 make build.zip
+	docker run --rm -v $(CURDIR):/usr/src/${REPOSITORY_NAME} -w /usr/src/${REPOSITORY_NAME} golang:${GO_DOCKER_VERSION} make build.zip
 
 docker-goget:
-	docker run --rm -v $(CURDIR):/usr/src/${REPOSITORY_NAME} -w /usr/src/${REPOSITORY_NAME} golang:1.8 make goget
+	docker run --rm -v $(CURDIR):/usr/src/${REPOSITORY_NAME} -w /usr/src/${REPOSITORY_NAME} golang:${GO_DOCKER_VERSION} make goget
 
 docker-goget-test:
-	docker run --rm -v $(CURDIR):/usr/src/${REPOSITORY_NAME} -w /usr/src/${REPOSITORY_NAME} golang:1.8 make goget-test
+	docker run --rm -v $(CURDIR):/usr/src/${REPOSITORY_NAME} -w /usr/src/${REPOSITORY_NAME} golang:${GO_DOCKER_VERSION} make goget-test
 
 docker-all:
-	docker run --rm -v $(CURDIR):/usr/src/${REPOSITORY_NAME} -w /usr/src/${REPOSITORY_NAME} golang:1.8 make all
+	docker run --rm -v $(CURDIR):/usr/src/${REPOSITORY_NAME} -w /usr/src/${REPOSITORY_NAME} golang:${GO_DOCKER_VERSION} make all
