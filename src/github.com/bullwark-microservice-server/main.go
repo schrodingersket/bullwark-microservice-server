@@ -25,9 +25,14 @@ func main() {
 
     } else {
 
+        allowedOrigins := handlers.AllowedOrigins([]string{"*"})
+        allowedMethods := handlers.AllowedMethods([]string{"GET", "POST", "DELETE", "PUT"})
+        allowedHeaders := handlers.AllowedHeaders([]string{"X-Requested-With", "Content-Type"})
+
         // Define API routes
         //
-        router := handlers.CORS()(routes.NewRouter())
+        router := handlers.CORS(allowedOrigins, allowedMethods,
+            allowedHeaders)(routes.NewRouter())
 
         // Start server
         //

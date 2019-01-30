@@ -12,7 +12,6 @@ var Json Middleware = func(inner http.Handler, route Route) http.Handler {
         // Set basic JSON headers.
         //
         w.Header().Set("Content-Type", "application/json;charset=UTF-8")
-        w.Header().Set("Accept", "application/json")
 
         inner.ServeHTTP(w, r)
     })
