@@ -6,7 +6,9 @@ import (
 	"fmt"
 	"github.com/docker/docker/api/types"
 	"github.com/phayes/freeport"
+	"io"
 	"net/url"
+	"os"
 	"path/filepath"
 
 	"github.com/dghubble/sling"
@@ -91,6 +93,21 @@ func (r DockerServiceProvider) createDockerContainer(request Request, extPort in
 
 	var coreConfig = common.Configs[cli.CoreConfigType].(cli.CoreConfig)
 	var internalJarPath = fmt.Sprintf("/var/run/%s.jar", request.ServiceKey)
+	var bgContext = context.Background()
+
+	// Pull image
+	//
+	out, err := r.dockerClient.ImagePull(bgContext, "java:8", types.ImagePullOptions{})
+
+	if err != nil {
+		return err
+	}
+
+	_, err = io.Copy(os.Stdout, out)
+
+	if err != nil {
+		return err
+	}
 
 	var config = container.Config{
 		Image: "java:8",
